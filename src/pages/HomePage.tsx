@@ -8,6 +8,7 @@ import {
   trustMetrics,
 } from '../data/portfolioContent'
 import shubhamImg from '../assets/ShubhamSharma.png'
+import shubhamResume from '../assets/Shubham Sharma Resume.pdf'
 
 const heroStagger: Variants = {
   hidden: {},
@@ -74,6 +75,15 @@ export function HomePage() {
               <Link to="/contact" className="button button-ghost">
                 Hire Me
               </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }}>
+              <a
+                href={shubhamResume}
+                className="button button-ghost"
+                download="Shubham-Sharma-Resume.pdf"
+              >
+                Download Resume
+              </a>
             </motion.div>
           </motion.div>
         </motion.div>
