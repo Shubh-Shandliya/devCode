@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --background: #080912;
+  --background-alt: #0f1222;
+  --surface-card: rgba(20, 24, 43, 0.72);
+  --surface-glass: rgba(27, 33, 60, 0.45);
+  --surface-hover: rgba(121, 123, 255, 0.15);
+  --text-soft: #b6b9cf;
+  --text-strong: #f6f7ff;
+  --accent: #84fdf0;
+  --border-color: rgba(138, 145, 208, 0.35);
+  --card-shadow: 0 22px 48px rgba(0, 0, 0, 0.35);
+  --soft-glow: 0 0 20px rgba(126, 123, 255, 0.4);
+  --hard-glow:
+    0 0 18px rgba(132, 253, 240, 0.35), 0 12px 24px rgba(127, 123, 255, 0.38);
+
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--text-soft);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 14% 15%, rgba(132, 253, 240, 0.15), transparent 34%),
+    radial-gradient(circle at 84% 5%, rgba(255, 89, 217, 0.16), transparent 38%),
+    radial-gradient(circle at 80% 80%, rgba(127, 123, 255, 0.24), transparent 33%),
+    linear-gradient(165deg, var(--background) 0%, var(--background-alt) 100%);
+}
+
+#root {
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: var(--text-strong);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+h2 {
+  font-size: clamp(1.15rem, 3vw, 1.6rem);
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
