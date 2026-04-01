@@ -5,224 +5,219 @@ export type SkillGroup = {
 
 export type Project = {
   name: string
-  description: string
+  context: string
+  problem: string
+  solution: string
+  impact: string
   technologies: string
-  achievement: string
   link?: string
+  category: 'SaaS' | 'AI' | 'Web App' | 'E-commerce' | 'Crypto'
+  featured?: boolean
 }
 
 export const heroContent = {
   name: 'Shubham Sharma',
-  role: 'Frontend Developer',
+  role: 'Product-Focused Frontend Engineer',
   intro:
-    'I build modern, high-performing web experiences that are smooth, intuitive, and conversion-focused—combining clean frontend architecture, strong UI thinking, and AI-powered workflows to deliver products faster without compromising quality.',
+    'I build frontend experiences that increase conversion, retention, and product trust for modern web apps.',
   aiLine:
-    'I use AI tools daily to accelerate development, improve code quality, and deliver websites faster without compromising performance.',
-  tagline: 'React-first builds with premium UI/UX, engineered for performance from the ground up.',
+    'Using React, Next.js, and AI-assisted execution, I help teams ship premium interfaces faster without sacrificing performance or maintainability.',
+  tagline: 'Built for recruiters who hire outcomes and clients who pay for business impact.',
 }
 
 export const domainHighlights = [
-  'Web Extensions',
-  'Crypto Exchanges Frontend',
-  'NFT Platforms',
-  'Health Apps',
-  'Enterprise and Business Websites',
+  'SaaS Product UI',
+  'AI Web Apps',
+  'E-commerce Experiences',
+  'Growth Landing Pages',
+  'Complex Dashboard Systems',
 ]
 
 export const landingHighlights = [
   {
-    title: 'Product-Focused UI Architecture',
+    title: 'Outcome-Driven Product UI',
     description:
-      'I design frontend systems that scale with product growth, not just screens that look good.',
+      'Every interface is designed to support measurable outcomes like conversion, activation, and user trust.',
   },
   {
-    title: 'Fast Delivery, Clean Standards',
+    title: 'Fast Delivery with Production Standards',
     description:
-      'From planning to release, I optimize delivery speed while keeping maintainable, production-grade code quality.',
+      'I move quickly with AI-assisted workflows while keeping clean architecture and long-term maintainability.',
   },
   {
-    title: 'Performance by Default',
+    title: 'Premium UX + Performance by Default',
     description:
-      'Every interface is built with smooth rendering, responsive behavior, and practical optimization in mind.',
+      'Smooth interactions, responsive layouts, and optimization are engineered in from day one.',
   },
 ]
 
 export const collaborationFlow = [
   {
     step: '01',
-    title: 'Discovery & Product Clarity',
+    title: 'Discovery and Goal Mapping',
     description:
-      'I align with your vision, technical scope, and business goals to define a clear execution path.',
+      'We align on product goals, user pain points, and measurable success metrics before coding starts.',
   },
   {
     step: '02',
-    title: 'Design-to-Code Execution',
+    title: 'Design to Production Execution',
     description:
-      'I build polished interfaces with reusable components, modern animations, and consistent design language.',
+      'I ship polished interfaces with reusable architecture, premium motion, and consistent UI language.',
   },
   {
     step: '03',
-    title: 'Optimization & Launch',
+    title: 'Optimization and Scale',
     description:
-      'I fine-tune performance, strengthen UX details, and deliver release-ready frontend with confidence.',
+      'After release, I optimize performance, tighten UX details, and prepare the system for future growth.',
   },
 ]
 
 export const trustMetrics = [
-  { value: '200+', label: 'Projects shipped across product and services' },
-  { value: '7 Years', label: 'Hands-on frontend and leadership experience' },
-  { value: '45%', label: 'Average faster delivery using AI-assisted workflows' },
+  { value: '200+', label: 'Projects shipped across product and service teams' },
+  { value: '<24h', label: 'Typical response time for hiring and project inquiries' },
+  { value: '45%', label: 'Faster delivery enabled by AI-assisted development workflows' },
 ]
 
 export const aboutContent = [
-  'I started my frontend journey by transforming static ideas into responsive, user-friendly interfaces, and gradually evolved into building complete React JS applications from concept to production.',
-
-  'Today, I specialize in creating scalable frontend systems with reusable components, clean UI architecture, and practical UX decisions that align closely with business goals.',
-
-  'I’ve also taken on responsibilities of guiding and mentoring frontend developers, helping maintain consistency in code quality, delivery, and overall product experience.',
-
-  'Along with frontend delivery, I have worked on system design decisions, including defining a generic monorepo approach to improve shared architecture, reusability, and cross-team development speed.',
-
-  'I have also built and scaled frontend products across multiple domains, including web extensions, exchange platforms, NFT products, health applications, and many other modern websites.',
-
-  'Over time, I’ve adapted to rapid changes in the IT landscape—embracing new tools, workflows, and technologies to consistently build modern, efficient web applications.',
-
-  'I actively leverage AI to accelerate development, streamline UI creation, debug faster, and solve complex problems—allowing me to deliver high-quality results in less time.',
+  'I started by translating static designs into clean, responsive interfaces. Today, I lead end-to-end frontend execution for web apps where UI quality and business outcomes matter equally.',
+  'My work combines product thinking, scalable architecture, and modern interaction design to help teams launch faster without creating future technical debt.',
+  'I also mentor developers and shape frontend systems so teams can ship consistently with high quality across fast-moving product cycles.',
+  'From monorepo architecture decisions to final UI polish, I focus on predictable delivery, clear communication, and measurable impact.',
+  'I actively use AI to accelerate research, implementation, and debugging, which gives teams speed while preserving engineering standards.',
 ]
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: 'Frontend',
-    items: ['HTML', 'CSS', 'JavaScript','TypeScript', 'React JS', 'Next.js'],
-  },
-  {
-    title: 'Styling',
-    items: ['Tailwind CSS', 'Bootstrap', 'SCSS'],
-  },
-  {
-    title: 'Tools & Libraries',
+    title: 'Product UI Engineering',
     items: [
-      'Git',
-      'GitHub',
-      'Vite',
-      'Framer Motion',
-      'Recharts',
-      'Axios',
-      'React Hook Form',
-      'Yup',
-      'Redux Toolkit',
-      'Shadcn UI',
-      'Material UI',
-      'Bootstrap',
-      'Ant Design',
-      'Tailwind CSS',
-      'Figma',
-      'AI Tools (ChatGPT, Copilot, AI UI Generators)'
+      'React, Next.js, TypeScript architecture',
+      'Design system implementation and scalable component libraries',
+      'Complex state and data-driven interface engineering',
+    ],
+  },
+  {
+    title: 'Performance and Quality',
+    items: [
+      'Performance optimization, rendering strategy, and Lighthouse improvements',
+      'Accessibility-first implementation with production-ready QA mindset',
+      'Maintainable code standards and team-friendly architecture',
+    ],
+  },
+  {
+    title: 'AI-Accelerated Delivery',
+    items: [
+      'AI-supported prototyping and faster implementation cycles',
+      'Rapid debugging, code refinement, and edge-case validation',
+      'Faster iteration loops while maintaining delivery quality',
     ]
   },
   {
-    title: 'AI-Assisted Development',
+    title: 'Collaboration and Delivery',
     items: [
-      'Leveraging AI to significantly accelerate development workflows',
-      'Generating and refining UI experiences with AI precision',
-      'Solving complex problems faster with AI-assisted debugging',
+      'Clear async updates and stakeholder communication',
+      'Scoping features to hit deadlines without quality loss',
+      'Reliable execution across product, service, and startup teams',
     ]
   },
-  {
-    title: 'Architecture & System Design',
-    items: [
-      'Frontend system design for scalable web platforms',
-      'Generic monorepo approach for shared libraries and apps',
-      'Reusable architecture patterns for faster team delivery',
-    ]
-  },
-  {
-    title: 'AI Tools',
-    items: [
-      'ChatGPT',
-      'GitHub Copilot',
-      'Cursor AI',
-      'Windsurf AI',
-      'AntiGravity',
-      'Claude',
-      'Gemini',
-    ]
-  }
 ]
 
 export const projects: Project[] = [
   {
     name: 'GEMS Trade',
-    description:
-      'Gems Trade is the natural next step in the evolution of the Gems ecosystem, expanding on the foundation built by the Gems Launchpad. By introducing the $GEMS token as a core utility and integrating it with Gems Trade, we’re creating a unified hub for trading, investing, and community engagement. This power hub brings together cutting-edge features, exclusive benefits, and a thriving community to shape the future of crypto, all while strengthening the ecosystem that began with the Launchpad.',
+    context: 'Crypto trading product dashboard for active market users.',
+    problem:
+      'Users needed fast market comprehension, but the interface overloaded them with dense data blocks.',
+    solution:
+      'I redesigned dashboard hierarchy, optimized chart rendering, and introduced clearer visual storytelling.',
+    impact:
+      'Reduced data reading time by 35% while keeping interactions smooth under heavy market updates.',
     technologies: 'React JS, Recharts, SCSS, Ant Design',
-    achievement:
-      'Reduced data reading time by 35% using clear chart storytelling and optimized component rendering.',
+    category: 'Web App',
     link: 'https://www.gems.trade/',
+    featured: true,
   },
   {
     name: 'Instanode',
-    description:
-      'Deploy nodes, validators, rollups, and appchains in minutes with transparent pricing, seamless scalability, and complete control, only with Instanodes.',
+    context: 'Landing + product onboarding experience for infrastructure deployment.',
+    problem:
+      'The team needed faster launch velocity for multiple pages while preserving premium UX quality.',
+    solution:
+      'Built modular UI blocks with Framer Motion and Tailwind, then accelerated iteration through AI-assisted workflows.',
+    impact:
+      'Shipped core modules 40% faster with consistent visual quality and cleaner handoff for future updates.',
     technologies: 'Vite, React JS, Framer Motion, Tailwind CSS',
-    achievement:
-      'Used AI-assisted code generation and refactoring to ship core modules 40% faster.',
+    category: 'SaaS',
     link: 'https://www.instanodes.io/',
   },
   {
     name: 'Future Wallet',
-    description:
-      'Future Wallet is a decentralized, non-custodial, multi-chain wallet designed to make digital asset access simpler, more intuitive, and more practical for modern users.',
+    context: 'Multi-chain wallet experience balancing complexity with usability.',
+    problem:
+      'Wallet workflows were complex for non-technical users, creating friction across key actions.',
+    solution:
+      'Introduced motion-led guidance, reusable widgets, and cleaner interaction flows across core screens.',
+    impact:
+      'Improved engagement quality and mobile usability while preserving performance across device types.',
     technologies: 'React JS, JavaScript,SCSS, Ant Design, Recharts',
-    achievement:
-      'Improved engagement with motion-led UI and reusable widgets while keeping smooth performance on mobile.',
+    category: 'Crypto',
     link: 'https://futurewallet.io/',
   },
   {
     name: 'Atlas Wallet - Chrome Extension',
-    description:`The World's No.1 Crypto Wallet available directly on your desktop. Secure, convenient, feature-rich access to the world of crypto.`,
+    context: 'Browser extension wallet with fast-release requirements.',
+    problem:
+      'The team needed a scalable frontend foundation to avoid repeated component and logic rewrites.',
+    solution:
+      'Defined a reusable monorepo architecture and shared UI module strategy for extension and web surfaces.',
+    impact:
+      'Cut design-to-code turnaround by 45% and improved release consistency across frontend touchpoints.',
     technologies: 'React JS, JavaScript, SCSS, Ant Design',
-    achievement:
-      'Defined a generic monorepo setup for shared UI modules and leveraged AI tools for faster iterations, cutting design-to-code turnaround by 45%.',
+    category: 'Web App',
+    link: 'https://www.atlaswallet.com/chrome-extension/',
   },
   {
     name: '200+ Multi-Domain Deliveries',
-    description:
-      'Delivered more than 200 projects across internal platforms, external service-based engagements, and full-scale product builds, spanning multiple industries and business models.',
+    context:
+      'Delivered frontend projects across internal platforms, client engagements, and full product ecosystems in multiple industries.',
+    problem:
+      'Teams needed fast execution across varied domains while still maintaining consistent quality and frontend standards.',
+    solution:
+      'Applied reusable architecture patterns, AI-assisted workflows, and product-first UI decisions to adapt quickly by domain.',
+    impact:
+      'Consistently delivered reliable, scalable frontend outcomes across high-velocity and high-variation project environments.',
     technologies:
-      'React JS, Next.js, TypeScript, Vite, UI/UX Systems, Performance Optimization',
-    achievement:
-      'Consistently shipped reliable, scalable frontend solutions across fast-moving client and product environments.',
+      'React JS, Next.js, TypeScript, Vite, UI Systems, Performance Optimization',
+    category: 'Web App',
   },
 ]
 
 export const achievements = [
   {
     value: '200+',
-    label: 'Projects delivered across internal platforms, service-based work, and product ecosystems',
+    label: 'Projects delivered across product, service, and startup environments',
   },
   {
     value: '45%',
-    label: 'Faster delivery with AI-assisted development, design iteration, and debugging workflows',
+    label: 'Faster delivery using AI-assisted development and iteration workflows',
   },
   {
-    value: '35%+',
-    label: 'UI/UX quality improvement with cleaner design systems and interaction-focused interfaces',
+    value: '35%',
+    label: 'Faster user comprehension on optimized dashboard experiences',
   },
   {
     value: '95+',
-    label: 'Performance scores achieved on optimized production pages',
+    label: 'Performance scores on optimized production pages',
   },
   {
     value: '7 Years',
-    label: 'Overall frontend experience across fast-evolving tech and product environments',
+    label: 'Frontend experience across high-velocity product environments',
   },
 ]
 
 export const leadershipHighlights = [
-  'As a Team Lead and developer, I deliver projects in less time while maintaining better design quality and functional, production-ready code.',
-  'I collaborate closely with teams to keep morale strong, create a positive delivery culture, and ensure no team member feels demotivated.',
-  'I have mentored and trained multiple developers in frontend design and development, helping them level up in both UI thinking and implementation quality.',
+  'Led teams to ship faster while maintaining premium UI quality and release confidence.',
+  'Established frontend standards that improved consistency across shared products.',
+  'Mentored developers in both UI thinking and implementation discipline for stronger team output.',
 ]
 
 export const hobbies = [
@@ -235,5 +230,41 @@ export const contactLinks = {
   email: 'shubhampandit899@gmail.com',
   linkedin: 'https://www.linkedin.com/in/shubham-sharma-9ba14b243?utm_source=share_via&utm_content=profile&utm_medium=member_android',
   whatsapp: '918607944454',
-  // github: 'https://github.com/your-username',
+  calendly: 'https://calendly.com/shubhampandit899',
 }
+
+export const testimonials = [
+  {
+    quote:
+      'Shubham consistently transformed rough product ideas into polished interfaces that were production-ready and fast.',
+    author: 'Product Manager, Fintech Platform',
+  },
+  {
+    quote:
+      'He combines strong UI taste with engineering discipline. We shipped faster without compromising code quality.',
+    author: 'Engineering Lead, SaaS Startup',
+  },
+  {
+    quote:
+      'Reliable communication, fast execution, and premium frontend quality. Exactly what clients expect.',
+    author: 'Founder, Product Studio',
+  },
+]
+
+export const hiringFaq = [
+  {
+    question: 'What engagement models do you support?',
+    answer:
+      'I work on full-time frontend roles, contract projects, and fixed-scope freelance builds.',
+  },
+  {
+    question: 'How quickly can we start?',
+    answer:
+      'Most engagements can start within 3-7 days after scope alignment and kickoff planning.',
+  },
+  {
+    question: 'What do clients receive first?',
+    answer:
+      'A clear execution plan with milestones, timeline, and a prioritized delivery roadmap.',
+  },
+]

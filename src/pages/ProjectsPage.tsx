@@ -1,35 +1,78 @@
 import { SectionHeader } from '../components/SectionHeader'
+import { ProjectCard } from '../components/ProjectCard'
 import { projects } from '../data/portfolioContent'
 
+const sectionCard =
+  'animate-rise-in card-surface-rich rounded-[1.4rem] border border-border p-9 max-[900px]:p-6'
+
+const btnGhost =
+  'btn-slide-fill group mt-4 inline-flex items-center rounded-xl border border-border bg-surface-glass px-4 py-2.5 font-semibold text-foreground no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-surface-hover'
+
 export function ProjectsPage() {
+  const featured = projects.find((project) => project.featured)
+  const remainingProjects = projects.filter((project) => !project.featured)
+
   return (
-    <section className="section-card">
+    <section className={sectionCard}>
       <SectionHeader
-        title="Projects"
-        subtitle="Selected work built with React and AI-accelerated delivery workflows."
+        title="Case Study Previews"
+        subtitle="Problem -> solution -> measurable impact across modern web product builds."
       />
-      <div className="grid two-col">
-        {projects.map((project) => (
-          <article key={project.name} className="info-card">
-            <h3 style={{marginBottom: '0.5rem'}}>{project.name}</h3>
-            <p style={{marginBottom: '0.5rem'}}>{project.description}</p>
-            <p style={{color: 'var(--text-strong)' , marginBottom: '0.5rem'}}>
-              <strong>Tech:</strong> {project.technologies}
+      <div className="mb-4 flex flex-wrap gap-2">
+        {['SaaS', 'AI', 'Web App', 'E-commerce', 'Crypto'].map((cat) => (
+          <span key={cat} className="rounded-full border border-border bg-surface-hover px-3 py-1 text-sm">
+            {cat}
+          </span>
+        ))}
+      </div>
+      {featured ? (
+        <div className="mb-4">
+          <ProjectCard>
+            <p className="mb-2 inline-block rounded-full border border-[color-mix(in_srgb,var(--accent)_45%,transparent)] bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] px-2.5 py-0.5 text-xs font-semibold text-accent">
+              Featured Case Study • {featured.category}
             </p>
-            <p style={{color: 'var(--text-strong)' , marginBottom: '0.5rem'}}>
-              <strong>Impact:</strong> {project.achievement}
-            </p>
-            {project.link ? (
-              <a
-                className="button button-ghost project-link-button"
-                href={project.link}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Visit Project
+            <h3 className="mb-2">{featured.name}</h3>
+            <p className="mb-2"><strong>Context:</strong> {featured.context}</p>
+            <p className="mb-2"><strong>Problem:</strong> {featured.problem}</p>
+            <p className="mb-2"><strong>Solution:</strong> {featured.solution}</p>
+            <p className="mb-2 text-foreground"><strong>Impact:</strong> {featured.impact}</p>
+            <p className="mb-2 text-foreground"><strong>Tech:</strong> {featured.technologies}</p>
+            {featured.link ? (
+              <a className={btnGhost} href={featured.link} target="_blank" rel="noreferrer">
+                <span>Read Case Study</span>
+                <span aria-hidden="true" className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-0.5">
+                  &rarr;
+                </span>
               </a>
             ) : null}
-          </article>
+          </ProjectCard>
+        </div>
+      ) : null}
+      <div className="grid grid-cols-1 gap-4 min-[901px]:grid-cols-2">
+        {remainingProjects.map((project) => (
+          <ProjectCard key={project.name}>
+            <p className="mb-2 inline-block rounded-full border border-border bg-surface-hover px-2.5 py-0.5 text-xs font-semibold text-accent">
+              {project.category}
+            </p>
+            <h3 className="mb-2">{project.name}</h3>
+            <p className="mb-2"><strong>Context:</strong> {project.context}</p>
+            <p className="mb-2"><strong>Problem:</strong> {project.problem}</p>
+            <p className="mb-2"><strong>Solution:</strong> {project.solution}</p>
+            <p className="mb-2 text-foreground">
+              <strong>Tech:</strong> {project.technologies}
+            </p>
+            <p className="mb-2 text-foreground">
+              <strong>Impact:</strong> {project.impact}
+            </p>
+            {project.link ? (
+              <a className={btnGhost} href={project.link} target="_blank" rel="noreferrer">
+                <span>Read Case Study</span>
+                <span aria-hidden="true" className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-0.5">
+                  &rarr;
+                </span>
+              </a>
+            ) : null}
+          </ProjectCard>
         ))}
       </div>
     </section>

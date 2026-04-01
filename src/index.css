@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
 
 :root {
   --background: #080912;
   --background-alt: #0f1222;
-  --surface-card: rgba(20, 24, 43, 0.72);
-  --surface-glass: rgba(27, 33, 60, 0.45);
+  --surface-card: rgba(16, 19, 36, 0.94);
+  --surface-glass: rgba(24, 28, 52, 0.82);
   --surface-hover: rgba(121, 123, 255, 0.15);
   --text-soft: #b6b9cf;
   --text-strong: #f6f7ff;
@@ -14,62 +15,224 @@
   --soft-glow: 0 0 20px rgba(126, 123, 255, 0.4);
   --hard-glow:
     0 0 18px rgba(132, 253, 240, 0.35), 0 12px 24px rgba(127, 123, 255, 0.38);
-
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  font-size: 17px;
-  line-height: 1.55;
-  font-weight: 400;
-  color: var(--text-soft);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+@theme {
+  --font-sans: 'Poppins', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
+  --color-surface-card: var(--surface-card);
+  --color-surface-glass: var(--surface-glass);
+  --color-surface-hover: var(--surface-hover);
+  --color-muted: var(--text-soft);
+  --color-foreground: var(--text-strong);
+  --color-accent: var(--accent);
+  --color-border: var(--border-color);
+
+  --shadow-card: var(--card-shadow);
+  --shadow-soft-glow: var(--soft-glow);
+  --shadow-hard-glow: var(--hard-glow);
+
+  --animate-rise-in: rise-in 700ms ease;
+  --animate-slide-down: slide-down 700ms ease;
 }
 
-body {
-  margin: 0;
-  min-height: 100svh;
-  background:
-    radial-gradient(circle at 14% 15%, rgba(132, 253, 240, 0.15), transparent 34%),
-    radial-gradient(circle at 84% 5%, rgba(255, 89, 217, 0.16), transparent 38%),
-    radial-gradient(circle at 80% 80%, rgba(127, 123, 255, 0.24), transparent 33%),
-    linear-gradient(165deg, var(--background) 0%, var(--background-alt) 100%);
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-#root {
-  min-height: 100svh;
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-h1,
-h2,
-h3 {
-  margin: 0;
-  color: var(--text-strong);
-  line-height: 1.2;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :root {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.55;
+    font-weight: 400;
+    color: var(--text-soft);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    background-color: var(--color-surface-glass);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background:
+      radial-gradient(circle at 14% 15%, rgba(132, 253, 240, 0.15), transparent 34%),
+      radial-gradient(circle at 84% 5%, rgba(255, 89, 217, 0.16), transparent 38%),
+      radial-gradient(circle at 80% 80%, rgba(127, 123, 255, 0.24), transparent 33%),
+      linear-gradient(165deg, var(--background) 0%, var(--background-alt) 100%);
+  }
+
+  #root {
+    min-height: 100svh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    color: var(--text-strong);
+    line-height: 1.2;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.15rem, 3vw, 1.6rem);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+  }
 }
 
-h1 {
-  font-size: clamp(2rem, 5vw, 3.4rem);
+@layer components {
+  .btn-slide-fill {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .btn-slide-fill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--accent) 38%, transparent) 0%,
+      color-mix(in srgb, #7f7bff 32%, transparent) 58%,
+      color-mix(in srgb, #ff59d9 24%, transparent) 100%
+    );
+    transform: translateX(102%);
+    transition: transform 260ms ease;
+  }
+
+  .btn-slide-fill:hover::before,
+  .btn-slide-fill:focus-visible::before {
+    transform: translateX(0);
+  }
+
+  /* Hero conic glow (pseudo-element) */
+  .hero-stage {
+    position: relative;
+  }
+
+  .hero-stage::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 90deg at 50% 50%,
+      rgba(108, 255, 234, 0.12),
+      rgba(127, 123, 255, 0.14),
+      rgba(255, 89, 217, 0.11),
+      rgba(108, 255, 234, 0.12)
+    );
+    filter: blur(20px);
+    z-index: -1;
+  }
+
+  /* Dashed hero photo frame using theme variables */
+  .hero-photo-frame {
+    border: 1px dashed color-mix(in srgb, var(--accent) 55%, var(--border-color));
+  }
+
+  /**
+   * Main section shells — opaque layered fill + blur so stacked sticky cards stay readable
+   * over the hero image and each other.
+   */
+  .card-surface-rich {
+    background-color: rgba(10, 12, 24, 0.96);
+    background-image:
+      radial-gradient(ellipse 130% 85% at 12% -8%, rgba(132, 253, 240, 0.14), transparent 52%),
+      radial-gradient(ellipse 85% 65% at 94% 96%, rgba(127, 123, 255, 0.2), transparent 50%),
+      radial-gradient(circle at 48% 118%, rgba(255, 89, 217, 0.07), transparent 45%),
+      linear-gradient(
+        168deg,
+        rgba(22, 26, 48, 0.99) 0%,
+        rgba(12, 14, 28, 1) 52%,
+        rgba(18, 21, 40, 0.98) 100%
+      );
+    backdrop-filter: blur(22px) saturate(1.2);
+    -webkit-backdrop-filter: blur(22px) saturate(1.2);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.07) inset,
+      0 1px 0 rgba(132, 253, 240, 0.05) inset,
+      var(--card-shadow);
+  }
+
+  /** Nested cards / tiles — still glassy but legible on top of section panels */
+  .card-inset-rich {
+    background-color: rgba(14, 17, 34, 0.88);
+    background-image:
+      linear-gradient(145deg, rgba(132, 253, 240, 0.07) 0%, transparent 46%),
+      linear-gradient(320deg, rgba(127, 123, 255, 0.1) 0%, transparent 44%);
+    backdrop-filter: blur(14px) saturate(1.12);
+    -webkit-backdrop-filter: blur(14px) saturate(1.12);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+
 }
 
-h2 {
-  font-size: clamp(1.15rem, 3vw, 1.6rem);
-}
+@layer utilities {
+  .section-grid-three {
+    @apply grid grid-cols-1 gap-4 min-[901px]:grid-cols-3;
+  }
 
-h3 {
-  font-size: 1.05rem;
-}
+  .section-grid-trust {
+    @apply mb-4 grid grid-cols-1 gap-4 min-[901px]:grid-cols-3;
+  }
 
-p {
-  margin: 0;
-}
-
-a {
-  color: inherit;
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
