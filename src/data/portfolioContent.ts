@@ -11,6 +11,7 @@ export type Project = {
   impact: string
   technologies: string
   link?: string
+  internalLink?: string
   category: 'SaaS' | 'AI' | 'Web App' | 'E-commerce' | 'Crypto'
   featured?: boolean
 }
@@ -122,6 +123,21 @@ export const skillGroups: SkillGroup[] = [
 ]
 
 export const projects: Project[] = [
+  {
+    name: 'Rural Farming Story - Cinematic Case Study',
+    context:
+      'Immersive storytelling experience built as a premium portfolio feature around real farming and rural life.',
+    problem:
+      'Most project pages feel static and fail to emotionally communicate lived experiences and daily rituals.',
+    solution:
+      'Created a scroll-based narrative with cinematic transitions, subtle Three.js atmosphere, and motion-driven chapters.',
+    impact:
+      'Transforms a personal real-world story into a memorable, high-end digital case study for portfolio differentiation.',
+    technologies: 'React, TypeScript, Tailwind CSS, Framer Motion, Three.js',
+    category: 'Web App',
+    internalLink: '/projects/farm-story',
+    featured: true,
+  },
   {
     name: 'GEMS Trade',
     context: 'Crypto trading product dashboard for active market users.',

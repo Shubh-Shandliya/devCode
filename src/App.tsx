@@ -4,6 +4,7 @@ import { ScrollToTop } from './components/ScrollToTop'
 import { AboutPage } from './pages/AboutPage'
 import { AchievementsPage } from './pages/AchievementsPage'
 import { ContactPage } from './pages/ContactPage'
+import { FarmStoryPage } from './pages/FarmStoryPage'
 import { HomePage } from './pages/HomePage'
 import { ProjectsPage } from './pages/ProjectsPage'
 import { SkillsPage } from './pages/SkillsPage'
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
+        <Route path="/projects/farm-story" element={<FarmStoryPage />} />
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

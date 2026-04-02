@@ -13,6 +13,7 @@ const navItems = [
   { to: '/about', label: 'About' },
   { to: '/skills', label: 'Skills' },
   { to: '/projects', label: 'Projects' },
+  { to: '/projects/farm-story', label: 'Farm Story' },
   { to: '/achievements', label: 'Achievements' },
   { to: '/contact', label: 'Contact' },
 ]

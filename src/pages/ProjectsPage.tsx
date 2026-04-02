@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { SectionHeader } from '../components/SectionHeader'
 import { ProjectCard } from '../components/ProjectCard'
 import { projects } from '../data/portfolioContent'
@@ -37,6 +38,14 @@ export function ProjectsPage() {
             <p className="mb-2"><strong>Solution:</strong> {featured.solution}</p>
             <p className="mb-2 text-foreground"><strong>Impact:</strong> {featured.impact}</p>
             <p className="mb-2 text-foreground"><strong>Tech:</strong> {featured.technologies}</p>
+            {featured.internalLink ? (
+              <Link className={btnGhost} to={featured.internalLink}>
+                <span>Open Cinematic Experience</span>
+                <span aria-hidden="true" className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-0.5">
+                  &rarr;
+                </span>
+              </Link>
+            ) : null}
             {featured.link ? (
               <a className={btnGhost} href={featured.link} target="_blank" rel="noreferrer">
                 <span>Read Case Study</span>
@@ -64,6 +73,14 @@ export function ProjectsPage() {
             <p className="mb-2 text-foreground">
               <strong>Impact:</strong> {project.impact}
             </p>
+            {project.internalLink ? (
+              <Link className={btnGhost} to={project.internalLink}>
+                <span>Open Cinematic Experience</span>
+                <span aria-hidden="true" className="ml-2 inline-block transition-transform duration-200 group-hover:translate-x-0.5">
+                  &rarr;
+                </span>
+              </Link>
+            ) : null}
             {project.link ? (
               <a className={btnGhost} href={project.link} target="_blank" rel="noreferrer">
                 <span>Read Case Study</span>
