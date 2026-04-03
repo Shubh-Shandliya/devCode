@@ -136,7 +136,7 @@ export function HomePage() {
           </motion.div>
         </motion.div>
         <motion.div
-          className="hero-photo-frame sticky top-30 z-10 order-2 grid h-[clamp(280px,48vw,380px)] w-full max-w-[360px] justify-self-center place-content-center overflow-hidden rounded-2xl text-center backdrop-blur-md min-[901px]:col-start-2 min-[901px]:row-span-2 min-[901px]:row-start-1 [background:radial-gradient(circle_at_20%_20%,rgba(108,255,234,0.14),transparent_42%),radial-gradient(circle_at_80%_10%,rgba(255,89,217,0.2),transparent_36%),rgba(14,17,34,0.88)]"
+          className="hero-photo-frame lg:sticky lg:top-30 z-10 order-2 grid h-[clamp(280px,48vw,380px)] w-full max-w-[360px] justify-self-center place-content-center overflow-hidden rounded-2xl text-center backdrop-blur-md min-[901px]:col-start-2 min-[901px]:row-span-2 min-[901px]:row-start-1 [background:radial-gradient(circle_at_20%_20%,rgba(108,255,234,0.14),transparent_42%),radial-gradient(circle_at_80%_10%,rgba(255,89,217,0.2),transparent_36%),rgba(14,17,34,0.88)]"
           variants={fadeUp}
           initial={{ opacity: 0, rotateY: 8, scale: 0.96 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}

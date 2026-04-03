@@ -1,0 +1,156 @@
+---
+description: >-
+  Spec to rebuild the Farm Story cinematic page elsewhere—deps, hooks, GSAP/Framer
+  recipes, CSS hooks, reduced motion, and interactive scenes.
+globs:
+  - "**/FarmStoryPage.tsx"
+  - "**/components/farm/**/*.tsx"
+  - "**/hooks/useGsapScene.ts"
+  - "**/hooks/useLenisScroll.ts"
+  - "**/hooks/useInteractionEngine.ts"
+  - "**/hooks/useFarmAmbientAudio.ts"
+alwaysApply: false
+---
+
+# Cinematic scroll story page (Farm Story reference)
+
+Use this when porting the same **layout, motion feel, and interaction model** to another React project. Rename `farm-*` prefixes if you want; keep the **behavior contracts** below.
+
+## 1. Dependencies (install matching majors)
+
+```bash
+npm i framer-motion gsap lenis
+```
+
+Optional (only if you keep the hero WebGL block): `three @react-three/fiber @react-three/drei`.
+
+Reference versions from this repo: `framer-motion` ^12, `gsap` ^3.14, `lenis` ^1.3.
+
+## 2. Global setup
+
+- Register once: `gsap.registerPlugin(ScrollTrigger)`.
+- **Smooth scroll + ScrollTrigger**: use a hook that creates `Lenis`, calls `ScrollTrigger.update()` on Lenis `scroll`, and drives `lenis.raf` from `gsap.ticker` (see `useLenisScroll`). Disable Lenis when `useReducedMotion()` is true.
+- **GSAP in React**: wrap setup in `gsap.context(() => { ... })` and `revert()` on cleanup (`useGsapScene` pattern).
+
+## 3. Page-level responsibilities (`FarmStoryPage` shape)
+
+| Concern | Implementation |
+|--------|----------------|
+| Chapter HUD | `useScroll()` → `scrollYProgress`; `useMotionValueEvent(..., 'change', map to chapter index)`. |
+| Section reveal (scale/opacity) | GSAP `fromTo` on `.transition-mask` class, `scrollTrigger: { trigger, scrub, start: 'top 86%', end: 'top 50%' }`. |
+| Light parallax on media | GSAP `to` on `.parallax-layer`, `yPercent: -4`, `scrub`, trigger spans section height. |
+| Horizontal garden track | `useScroll({ target: ref, offset: ['start start', 'end end'] })` → `useTransform(progress, [0,1], [0, -travelPx])` on `motion.div` `style={{ x }}`; omit `x` when reduced motion. |
+| Ambient audio | Hidden `<audio loop>`, ref + hook toggling `play`/`pause` on user gesture (browser autoplay rules). |
+
+## 4. Framer Motion recipes (copy as-is, rename classes)
+
+**HUD enter**
+
+```tsx
+initial={{ opacity: 0, x: 10 }}
+animate={{ opacity: 1, x: 0 }}
+transition={{ duration: 0.55 }}
+```
+
+**Hero copy**
+
+```tsx
+initial={{ opacity: 0, y: 24 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.9, ease: 'easeOut' }}
+```
+
+**Cinematic heading words** (clip reveal + stagger)
+
+```tsx
+initial={{ clipPath: 'inset(0 0 100% 0)', y: 32, opacity: 0 }}
+whileInView={{ clipPath: 'inset(0 0 0% 0)', y: 0, opacity: 1 }}
+viewport={{ once: true, amount: 0.6 }}
+transition={{ duration: 0.75, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+```
+
+**Subtitle**
+
+```tsx
+initial={{ opacity: 0, x: -24 }}
+whileInView={{ opacity: 1, x: 0 }}
+viewport={{ once: true, amount: 0.5 }}
+transition={{ duration: 0.7, delay: 0.2 }}
+```
+
+**Story cards** (vertical scenes)
+
+```tsx
+// Card
+initial={{ opacity: 0, y: 48, scale: 0.98 }}
+whileInView={{ opacity: 1, y: 0, scale: 1 }}
+viewport={{ once: true, amount: 0.35 }}
+transition={{ duration: 0.8, ease: 'easeOut' }}
+// Inner media
+initial={{ scale: 1.08 }}
+whileInView={{ scale: 1 }}
+viewport={{ once: true, amount: 0.3 }}
+transition={{ duration: 1.1, ease: 'easeOut' }}
+```
+
+**Machinery stack** (scroll-scrubbed per card)
+
+- Container: tall `minHeight` (e.g. `max(210, cards.length * 72)vh`), inner **sticky** stack.
+- Per card index `i`, `total = N`, `slot = 1/N`, `start = i * slot`, `end = min(1, start + slot * 0.72)`.
+- Maps: `y` `[150,0]` (first card fixed `[0,0]`), `scale` `[0.93,1]`, `opacity` `[0,1]` (first always 1).
+
+**Milk steps**
+
+```tsx
+initial={{ opacity: 0, x: index % 2 === 0 ? -32 : 32 }}
+whileInView={{ opacity: 1, x: 0 }}
+viewport={{ once: true, amount: 0.35 }}
+transition={{ duration: 0.65, ease: 'easeOut' }}
+```
+
+**Closing block**
+
+```tsx
+initial={{ opacity: 0, y: 40 }}
+whileInView={{ opacity: 1, y: 0 }}
+viewport={{ once: true, amount: 0.25 }}
+transition={{ duration: 0.8, ease: 'easeOut' }}
+```
+
+## 5. CSS hooks (must exist for GSAP selectors)
+
+- **Reveal scrub**: class on section wrappers, e.g. `.farm-transition-mask` — GSAP animates `opacity` + `scale`.
+- **Parallax**: class on image wrappers, e.g. `.farm-parallax-layer` — GSAP `yPercent`.
+- **Decorative**: film grain (`steps` keyframes), scroll indicator (`ease-in-out` infinite)—see `index.css` for `@keyframes farm-grain-shift`, `farm-scroll-breathe`.
+- **Milk spotlight**: container sets `--spotlight-x`, `--spotlight-y` from pointer; list styled with radial mask/gradient using those vars.
+- **Tilt cards** (if used): `.farm-tilt-card` + 3D transform in CSS; optional pointer listeners.
+
+Port the **farm-*** rules from `src/index.css` or extract into `farm-story.css` and import once in the app shell.
+
+## 6. Interactive scenes (cursor + word push)
+
+- Hook: `useInteractionEngine` — rAF loop, distance falloff from **object pose** + optional **cursor pose**, writes `transform`/`opacity` on word DOM nodes (refs array).
+- Requires: `containerRef`, `objectPoseRef` (animated element track), `wordRefsRef`, `enabled: !reduceMotion`.
+- Pair with `CustomCursorOverlay` + pointer layer updating `cursorPoseRef` in container coordinates.
+
+## 7. Reduced motion contract
+
+- `useReducedMotion()` from Framer → boolean.
+- Disable: Lenis, GSAP scene setup (`useGsapScene(..., !reduceMotion)`), WebGL hero, horizontal `motion` `x`, interaction engine, custom cursor.
+- Keep: static layout, readable content, `whileInView` can stay (respects user prefs via Framer) or short-circuit to final state if you prefer zero motion.
+
+## 8. Optional WebGL hero
+
+- Lazy-load R3F canvas; gate with `!reduceMotion && pageVisible`.
+- Fallback: static poster image or CSS-only hero.
+
+## 9. Port checklist
+
+- [ ] Deps installed; `ScrollTrigger` registered.
+- [ ] Lenis + ticker wired; ST updates on scroll.
+- [ ] All GSAP targets have stable classes inside `rootRef` / mounted tree.
+- [ ] Sticky sections have enough scroll height (`minHeight` vh).
+- [ ] `prefers-reduced-motion` path tested.
+- [ ] Audio toggle only starts after user click if required by browser.
+
+When pasting into a **new** repo, copy: `useGsapScene`, `useLenisScroll`, Framer components, interaction hook + scene files, and the CSS block; then replace content data and image paths.

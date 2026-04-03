@@ -15,12 +15,15 @@ import { useGsapScene } from '../hooks/useGsapScene'
 import { useLenisScroll } from '../hooks/useLenisScroll'
 import { useReducedMotionThree } from '../hooks/useReducedMotionThree'
 import {
+  farmAmbientAudio,
   farmClosing,
   farmScenes,
   gardenScrollCards,
   milkProcessSteps,
   tractorRailCards,
 } from '../data/farmStoryContent'
+import { useFarmAmbientAudio } from '../hooks/useFarmAmbientAudio'
+import { useMediaQuery, useViewportInnerWidth } from '../hooks/useMediaQuery'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -37,10 +40,15 @@ const chapterTitles = [
 
 export function FarmStoryPage() {
   const reduceMotion = useReducedMotionThree()
+  const isNarrowViewport = useMediaQuery('(max-width: 900px)')
+  const viewportWidth = useViewportInnerWidth()
   useLenisScroll(!reduceMotion)
   const rootRef = useRef<HTMLDivElement>(null)
   const gardenScrollRef = useRef<HTMLDivElement>(null)
+  const ambientAudioRef = useRef<HTMLAudioElement>(null)
   const [ambientOn, setAmbientOn] = useState(false)
+
+  useFarmAmbientAudio(ambientAudioRef, ambientOn && Boolean(farmAmbientAudio.src), farmAmbientAudio.volume)
   const [activeChapter, setActiveChapter] = useState(1)
   const { scrollYProgress } = useScroll()
   const { scrollYProgress: gardenProgress } = useScroll({
@@ -55,8 +63,8 @@ export function FarmStoryPage() {
 
   const hudLabel = useMemo(() => chapterTitles[activeChapter - 1], [activeChapter])
   const gardenCards = gardenScrollCards
-  const gardenCardWidth = 420
-  const gardenGap = 20
+  const gardenCardWidth = isNarrowViewport ? Math.min(Math.round(viewportWidth * 0.88), 360) : 420
+  const gardenGap = isNarrowViewport ? 13 : 20
   const gardenTravel = (gardenCards.length - 1) * (gardenCardWidth + gardenGap)
   const gardenX = useTransform(gardenProgress, [0, 1], [0, -gardenTravel])
   const verticalScenes = farmScenes.filter(
@@ -70,35 +78,71 @@ export function FarmStoryPage() {
   useGsapScene(() => {
     if (!rootRef.current) return
 
-    gsap.utils.toArray<HTMLElement>('.farm-transition-mask').forEach((section) => {
-      gsap.fromTo(
-        section,
-        { opacity: 0.8, scale: 0.996 },
-        {
-          opacity: 1,
-          scale: 1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 86%',
-            end: 'top 50%',
-            scrub: true,
-          },
-        },
-      )
-    })
+    ScrollTrigger.matchMedia({
+      '(min-width: 901px)': () => {
+        gsap.utils.toArray<HTMLElement>('.farm-transition-mask').forEach((section) => {
+          gsap.fromTo(
+            section,
+            { opacity: 0.8, scale: 0.996 },
+            {
+              opacity: 1,
+              scale: 1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 86%',
+                end: 'top 50%',
+                scrub: true,
+              },
+            },
+          )
+        })
 
-    gsap.utils.toArray<HTMLElement>('.farm-parallax-layer').forEach((layer) => {
-      gsap.to(layer, {
-        yPercent: -4,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: layer,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      })
+        gsap.utils.toArray<HTMLElement>('.farm-parallax-layer').forEach((layer) => {
+          gsap.to(layer, {
+            yPercent: -4,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: layer,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          })
+        })
+      },
+      '(max-width: 900px)': () => {
+        gsap.utils.toArray<HTMLElement>('.farm-transition-mask').forEach((section) => {
+          gsap.fromTo(
+            section,
+            { opacity: 0.92, scale: 0.998 },
+            {
+              opacity: 1,
+              scale: 1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 92%',
+                end: 'top 64%',
+                scrub: 0.65,
+              },
+            },
+          )
+        })
+
+        gsap.utils.toArray<HTMLElement>('.farm-parallax-layer').forEach((layer) => {
+          gsap.to(layer, {
+            yPercent: -1.5,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: layer,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          })
+        })
+      },
     })
   }, [], !reduceMotion)
 
@@ -112,24 +156,37 @@ export function FarmStoryPage() {
       </header>
 
       <div className="farm-story-root">
-        <motion.aside
-          className="farm-hud"
-          initial={{ opacity: 0, x: 10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.55 }}
-        >
-          <p>Chapter {String(activeChapter).padStart(2, '0')}</p>
-          <h3>{hudLabel}</h3>
-        </motion.aside>
+        <div className="farm-story-controls">
+          <button
+            type="button"
+            className="farm-audio-toggle"
+            onClick={() => setAmbientOn((prev) => !prev)}
+            aria-pressed={ambientOn}
+            aria-label={ambientOn ? 'Turn off ambient background sound' : 'Turn on ambient background sound'}
+            title="Background atmosphere audio for this story"
+          >
+            {ambientOn ? 'Ambient: On' : 'Ambient: Off'}
+          </button>
 
-        <button
-          type="button"
-          className="farm-audio-toggle"
-          onClick={() => setAmbientOn((prev) => !prev)}
-          aria-pressed={ambientOn}
-        >
-          {ambientOn ? 'Ambient: On' : 'Ambient: Off'}
-        </button>
+          <motion.aside
+            className="farm-hud"
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.55 }}
+          >
+            <p>Chapter {String(activeChapter).padStart(2, '0')}</p>
+            <h3>{hudLabel}</h3>
+          </motion.aside>
+        </div>
+
+        <audio
+          ref={ambientAudioRef}
+          src={farmAmbientAudio.src}
+          loop
+          preload="metadata"
+          aria-hidden="true"
+          className="farm-ambient-audio"
+        />
 
         <div className="farm-transition-mask farm-parallax-layer">
           <FarmHero />

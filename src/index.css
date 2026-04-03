@@ -588,6 +588,18 @@
     background: rgba(149, 195, 127, 0.14);
   }
 
+  .farm-ambient-audio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .cinematic-heading {
     display: grid;
     gap: 0.6rem;
@@ -911,6 +923,11 @@
     gap: 0;
     padding-bottom: 0;
     overflow-x: clip;
+  }
+
+  /* Desktop: children stay fixed to corners; mobile: row layout (see max-width rule). */
+  .farm-story-controls {
+    display: contents;
   }
 
   .farm-audio-toggle,
@@ -1332,12 +1349,91 @@
   }
 
   @media (max-width: 900px) {
+    .farm-page-header {
+      padding-left: max(1rem, env(safe-area-inset-left, 0px));
+      padding-right: max(1rem, env(safe-area-inset-right, 0px));
+    }
+
+    .farm-story-controls {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.45rem 0.75rem;
+      width: 100%;
+      padding: 0 max(0.65rem, env(safe-area-inset-left, 0px)) 0 max(0.65rem, env(safe-area-inset-right, 0px));
+      margin-bottom: 0.35rem;
+      box-sizing: border-box;
+    }
+
     .farm-hud,
     .farm-audio-toggle {
       position: static;
+      top: auto;
+      left: auto;
+      right: auto;
       border: 0;
       width: fit-content;
       background: rgba(4, 9, 15, 0.82);
+    }
+
+    .farm-hud {
+      text-align: right;
+    }
+
+    .farm-hero-copy {
+      padding-top: clamp(1.1rem, 5vh, 2.75rem);
+    }
+
+    .farm-scene-shell {
+      min-height: auto;
+    }
+
+    .farm-scene-shell-last {
+      min-height: auto;
+      margin-bottom: 0;
+    }
+
+    .farm-garden-shell,
+    .farm-milk-shell {
+      min-height: auto;
+    }
+
+    .farm-closing-shell {
+      min-height: auto;
+      padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+    }
+
+    .interactive-scene-stage {
+      cursor: auto;
+      min-height: 68svh;
+    }
+
+    .cinematic-heading-title {
+      font-size: clamp(1.85rem, 10vw, 3.1rem);
+      line-height: 0.95;
+    }
+
+    .farm-machinery-head .cinematic-heading-title {
+      font-size: clamp(1.75rem, 9vw, 2.85rem);
+    }
+
+    .farm-milk-head {
+      margin-bottom: 0.85rem;
+    }
+
+    .farm-milk-track {
+      top: clamp(9.5rem, 18vw, 8.5rem);
+    }
+
+    .farm-garden-intro {
+      margin-bottom: 0.35rem;
+    }
+
+    .farm-garden-sticky {
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
     }
 
     .farm-meta-strip {

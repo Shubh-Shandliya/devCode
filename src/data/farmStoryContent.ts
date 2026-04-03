@@ -166,3 +166,9 @@ export const gardenScrollCards = [
       'https://images.unsplash.com/photo-1457530378978-8bac673b8062?auto=format&fit=crop&w=1800&q=80',
   },
 ]
+
+/** Farm Story ambient loop (file in `public/audio/`). */
+export const farmAmbientAudio = {
+  src: '/audio/farm-ambient.mp3',
+  volume: 0.28,
+} as const
