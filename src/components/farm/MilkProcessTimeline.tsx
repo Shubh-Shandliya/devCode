@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useRef } from 'react'
 import { CinematicHeading } from './CinematicHeading'
 
 type MilkProcessTimelineProps = {
@@ -6,6 +7,18 @@ type MilkProcessTimelineProps = {
 }
 
 export function MilkProcessTimeline({ steps }: MilkProcessTimelineProps) {
+  const listRef = useRef<HTMLDivElement>(null)
+
+  const setSpotlightFromPointer = (clientX: number, clientY: number) => {
+    const list = listRef.current
+    if (!list) return
+    const rect = list.getBoundingClientRect()
+    const x = clientX - rect.left
+    const y = clientY - rect.top
+    list.style.setProperty('--spotlight-x', `${x.toFixed(2)}px`)
+    list.style.setProperty('--spotlight-y', `${y.toFixed(2)}px`)
+  }
+
   return (
     <section className="farm-milk-shell farm-transition-mask">
       <div className="farm-milk-head">
@@ -17,7 +30,16 @@ export function MilkProcessTimeline({ steps }: MilkProcessTimelineProps) {
         />
       </div>
       <div className="farm-milk-track" aria-hidden="true" />
-      <div className="farm-milk-list">
+      <div
+        ref={listRef}
+        className="farm-milk-list"
+        onPointerEnter={(event) => {
+          setSpotlightFromPointer(event.clientX, event.clientY)
+        }}
+        onPointerMove={(event) => {
+          setSpotlightFromPointer(event.clientX, event.clientY)
+        }}
+      >
         {steps.map((step, index) => (
           <motion.article
             key={step.title}

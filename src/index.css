@@ -364,7 +364,7 @@
     min-height: 118svh;
   }
 
-  .farm-scene-shell + .farm-scene-shell:not(.farm-scene-shell-last) {
+  .farm-scene-shell + .farm-scene-shell:not(.farm-scene-shell-last):not(.farm-no-overlap) {
     margin-top: -22svh;
   }
 
@@ -466,8 +466,11 @@
   }
 
   .farm-milk-list {
+    --spotlight-x: 50%;
+    --spotlight-y: 50%;
     display: grid;
     gap: 0.8rem;
+    position: relative;
   }
 
   .farm-milk-item {
@@ -638,6 +641,30 @@
     padding: 0.2rem 0 1.1rem;
     z-index: 30;
     background: linear-gradient(180deg, rgba(8, 10, 18, 0.88), rgba(8, 10, 18, 0.98));
+  }
+
+  .farm-dual-scene-row {
+    display: flex;
+    gap: clamp(0.45rem, 1vw, 0.8rem);
+    align-items: stretch;
+    padding: 0 clamp(0.8rem, 1.8vw, 1.2rem);
+    position: relative;
+  }
+
+  .farm-dual-scene-item {
+    flex: 1 1 0;
+    min-width: 0;
+    border-radius: 0.85rem;
+    overflow: hidden;
+    border: 1px solid rgba(242, 203, 21, 0.16);
+  }
+
+  .farm-dual-scene-row .farm-scene-shell {
+    min-height: auto;
+  }
+
+  .farm-dual-scene-row .farm-scene-card {
+    min-height: 78svh;
   }
 
   .farm-machinery-head {
@@ -990,8 +1017,9 @@
     min-height: 100svh;
   }
 
-  .farm-scene-shell + .farm-scene-shell:not(.farm-scene-shell-last) {
-    margin-top: -8svh;
+  .farm-scene-shell + .farm-scene-shell:not(.farm-scene-shell-last):not(.farm-no-overlap) {
+    /* Strong overlap so the next chapter fully covers the previous one */
+    margin-top: -22svh;
   }
 
   .farm-scene-shell-last {
@@ -1021,12 +1049,31 @@
     color: #d0d6de;
   }
 
+  .interactive-scene-stage {
+    position: relative;
+    /* Must span the whole sticky scene card so pointermove continues working */
+    min-height: 92svh;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  .interactive-word {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+    transform-origin: center center;
+    vertical-align: baseline;
+  }
+
+  .interactive-word:not(:last-child) {
+    margin-right: 0.22em;
+  }
+
   .farm-machinery-shell {
     min-height: auto;
     padding: clamp(1.2rem, 2vw, 2rem) 0 1rem;
     background: #060a10;
-    border-top: 1px solid rgba(242, 203, 21, 0.2);
-    border-bottom: 1px solid rgba(242, 203, 21, 0.2);
+    border-top: 0;
+    border-bottom: 0;
   }
 
   .farm-machinery-head {
@@ -1040,22 +1087,58 @@
   }
 
   .farm-machinery-stack {
-    padding-left: clamp(1rem, 2.6vw, 2.6rem);
-    padding-right: clamp(1rem, 2.6vw, 2.6rem);
+    width: 100%;
+    margin: 0 auto;
+    min-height: min(78svh, 680px);
+    position: relative;
   }
 
   .farm-machinery-card {
-    min-height: min(62vh, 500px);
-    border: 1px solid rgba(242, 203, 21, 0.2);
+    min-height: min(78svh, 680px);
+    border: 0;
     background: #060a10;
+    /* border-radius: 0.9rem; */
+    box-shadow: 0 26px 54px rgba(0, 0, 0, 0.42);
   }
 
   .farm-machinery-card img {
-    min-height: min(62vh, 500px);
+    min-height: min(78svh, 680px);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(0.95) contrast(1.03) brightness(0.9);
   }
 
   .farm-machinery-overlay {
-    background: linear-gradient(to top, rgba(4, 9, 15, 0.95), rgba(4, 9, 15, 0.2));
+    padding: clamp(1.1rem, 2vw, 1.7rem);
+    background:
+      linear-gradient(to top, rgba(4, 9, 15, 0.74) 0%, rgba(4, 9, 15, 0.32) 38%, rgba(4, 9, 15, 0.05) 100%);
+    backdrop-filter: blur(1.2px);
+  }
+
+  .farm-machinery-overlay p {
+    color: rgba(247, 243, 232, 0.92);
+    max-width: 58ch;
+  }
+
+  .farm-machinery-scroll {
+    position: relative;
+  }
+
+  .farm-machinery-sticky {
+    position: sticky;
+    top: 8svh;
+    min-height: 86svh;
+    display: grid;
+    align-items: center;
+  }
+
+  .farm-machinery-stack-card {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    will-change: transform, opacity;
   }
 
   .farm-garden-shell,
@@ -1068,18 +1151,82 @@
     padding: clamp(1rem, 2.6vw, 2.6rem);
   }
 
-  .farm-garden-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    border-top: 1px solid rgba(242, 203, 21, 0.18);
-    border-left: 1px solid rgba(242, 203, 21, 0.18);
+  .farm-closing-shell {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(242, 203, 21, 0.2);
+    background:
+      radial-gradient(circle at 88% 20%, rgba(242, 203, 21, 0.14), transparent 42%),
+      linear-gradient(165deg, #070b12 0%, #0b1018 62%, #090d14 100%);
+    box-shadow:
+      0 20px 42px rgba(0, 0, 0, 0.36),
+      inset 0 0 0 1px rgba(242, 203, 21, 0.06);
+    display: grid;
+    align-content: center;
+    gap: clamp(1rem, 2.2vw, 1.4rem);
+    padding: clamp(1.4rem, 3vw, 2.7rem);
+  }
+
+  .farm-closing-shell h2 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 4.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    max-width: 15ch;
+    color: #f6f1e4;
+  }
+
+  .farm-closing-shell p {
+    margin: 0;
+    max-width: 62ch;
+    color: rgba(247, 243, 232, 0.82);
+    font-size: clamp(1rem, 1.55vw, 1.12rem);
+  }
+
+  .farm-closing-actions {
+    margin-top: clamp(0.4rem, 1vw, 1rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .farm-garden-scroll {
+    position: relative;
+    min-height: 240svh;
+  }
+
+  .farm-garden-sticky {
+    position: sticky;
+    top: 8svh;
+    min-height: 84svh;
+    overflow: hidden;
+    display: grid;
+    align-items: center;
+  }
+
+  .farm-garden-track {
+    display: flex;
+    gap: 1.25rem;
+    width: max-content;
+    will-change: transform;
+    padding: 0 clamp(1rem, 2.6vw, 2.6rem);
   }
 
   .farm-garden-card {
-    min-height: 50svh;
-    border: 0;
-    border-right: 1px solid rgba(242, 203, 21, 0.18);
-    border-bottom: 1px solid rgba(242, 203, 21, 0.18);
+    width: 420px;
+    min-height: min(70svh, 580px);
+    border: 1px solid rgba(242, 203, 21, 0.2);
+    overflow: hidden;
+    background: #060a10;
+    flex: 0 0 auto;
+  }
+
+  .farm-garden-card img {
+    width: 100%;
+    height: 100%;
+    min-height: min(70svh, 580px);
+    object-fit: cover;
+    object-position: center;
   }
 
   .farm-milk-track,
@@ -1091,20 +1238,96 @@
     background: transparent;
     border: 1px solid rgba(242, 203, 21, 0.22);
     border-radius: 0;
+    transition:
+      opacity 260ms ease,
+      filter 260ms ease,
+      border-color 260ms ease,
+      background-color 260ms ease,
+      transform 260ms ease,
+      box-shadow 260ms ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .farm-milk-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        170px circle at var(--spotlight-x) var(--spotlight-y),
+        rgba(242, 203, 21, 0.24) 0%,
+        rgba(242, 203, 21, 0.12) 34%,
+        rgba(242, 203, 21, 0.02) 58%,
+        rgba(0, 0, 0, 0) 72%
+      );
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .farm-milk-list:hover .farm-milk-item {
+    opacity: 0.5;
+    filter: grayscale(0.26) brightness(0.78);
+  }
+
+  .farm-milk-list:hover .farm-milk-item::before {
+    opacity: 1;
+  }
+
+  .farm-milk-list:hover .farm-milk-item:hover {
+    opacity: 1;
+    filter: none;
+    border-color: rgba(242, 203, 21, 0.72);
+    background: rgba(6, 10, 16, 0.88);
+    box-shadow:
+      0 12px 26px rgba(0, 0, 0, 0.35),
+      inset 0 0 0 1px rgba(242, 203, 21, 0.18);
+    transform: translateY(-1px);
   }
 
   .farm-btn {
-    border-radius: 0;
-    border-color: rgba(242, 203, 21, 0.4);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 0.7rem;
+    border: 1px solid rgba(242, 203, 21, 0.36);
+    padding: 0.82rem 1.15rem;
+    font-weight: 600;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease,
+      color 220ms ease;
+  }
+
+  .farm-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+    transform: translateX(-130%);
+    transition: transform 300ms ease;
+  }
+
+  .farm-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(242, 203, 21, 0.7);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .farm-btn:hover::before {
+    transform: translateX(130%);
   }
 
   .farm-btn-primary {
-    background: #f2cb15;
+    background: linear-gradient(120deg, #f2cb15 0%, #f8da53 100%);
     color: #060a10;
   }
 
   .farm-btn-ghost {
-    background: transparent;
+    background: rgba(242, 203, 21, 0.05);
     color: #f7f3e8;
   }
 
@@ -1131,7 +1354,7 @@
       font-size: clamp(2.2rem, 14vw, 4rem);
     }
 
-    .farm-scene-shell + .farm-scene-shell:not(.farm-scene-shell-last) {
+    .farm-scene-shell + .farm-scene-shell:not(.farm-scene-shell-last):not(.farm-no-overlap) {
       margin-top: 0;
     }
 
@@ -1141,18 +1364,55 @@
       min-height: 68svh;
     }
 
+    .farm-dual-scene-row {
+      flex-direction: column;
+      padding: 0;
+      gap: 0.8rem;
+    }
+
+    .farm-dual-scene-row .farm-scene-card {
+      min-height: 68svh;
+    }
+
     .farm-machinery-stack {
-      padding-left: 0;
-      padding-right: 0;
+      width: 100%;
+      min-height: 62svh;
     }
 
     .farm-machinery-card,
     .farm-machinery-card img {
-      min-height: 56svh;
+      min-height: 62svh;
     }
 
-    .farm-garden-grid {
-      grid-template-columns: 1fr;
+    .farm-machinery-sticky {
+      top: 0;
+      min-height: 64svh;
+    }
+
+    .farm-machinery-stack-card {
+      position: relative;
+      margin: 0 0 1rem;
+    }
+
+    .farm-garden-scroll {
+      min-height: auto;
+    }
+
+    .farm-garden-sticky {
+      position: relative;
+      top: auto;
+      min-height: auto;
+      overflow-x: auto;
+      padding-bottom: 0.8rem;
+    }
+
+    .farm-garden-track {
+      gap: 0.8rem;
+      padding: 0;
+    }
+
+    .farm-garden-card {
+      width: min(88vw, 360px);
     }
   }
 }

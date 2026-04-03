@@ -106,7 +106,7 @@ export const tractorRailCards = [
     title: 'Field Start',
     caption: 'The first engine sound opens the day.',
     image:
-      'https://images.unsplash.com/photo-1530267981375-fb31e63fc8b6?auto=format&fit=crop&w=1800&q=80',
+    'https://media.istockphoto.com/id/1333956412/photo/mornings-and-mountains.webp?s=2048x2048&w=is&k=20&c=lHFzTDHd0MBoh47wqIPaxlhmGnyE5o0F0WCxwEJ5ytQ=',
   },
   {
     title: 'Grass Run',
@@ -123,6 +123,45 @@ export const tractorRailCards = [
   {
     title: 'End Of Shift',
     caption: 'Dust settles while the day closes with purpose.',
+    image:
+      'https://images.unsplash.com/photo-1457530378978-8bac673b8062?auto=format&fit=crop&w=1800&q=80',
+  },
+]
+
+export const gardenScrollCards = [
+  {
+    title: 'Seed Trays',
+    caption: 'Young seedlings begin with care, water, and morning light.',
+    image:
+      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1800&q=80',
+  },
+  {
+    title: 'Kitchen Herbs',
+    caption: 'Basil, mint, and coriander stay close to daily meals.',
+    image:
+      'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=1800&q=80',
+  },
+  {
+    title: 'Tomato Rows',
+    caption: 'Seasonal vegetables bring color and flavor to the home.',
+    image:
+      'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=1800&q=80',
+  },
+  {
+    title: 'Flower Beds',
+    caption: 'Blooms turn corners of the house into living art.',
+    image:
+      'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1800&q=80',
+  },
+  {
+    title: 'Watering Time',
+    caption: 'Evening watering keeps roots cool and healthy.',
+    image:
+      'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1800&q=80',
+  },
+  {
+    title: 'Harvest Basket',
+    caption: 'Home-grown produce closes the day with satisfaction.',
     image:
       'https://images.unsplash.com/photo-1457530378978-8bac673b8062?auto=format&fit=crop&w=1800&q=80',
   },
